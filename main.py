@@ -17,7 +17,7 @@ def run():
 
     menus = Menu(str(Db.outputData()))
     random.seed(20)
-    randObj1 = random.randint(200, 400)
+    randObj1 = random.randint(100, 300)
     random.seed(2)
     randObj2 = random.randint(450, 600)
     random.seed(10)
@@ -35,21 +35,43 @@ def run():
 
         player = Player(screen, positionPlayer, jumpPlayer, playerSkin)
         playerCorX = player.cordinateX()
+        startPosY = jumpPlayer + 41.5 == 520;
+        print( "P1X:" + str(playerCorX) + "P1Y:" + str(jumpPlayer + 41.5)+ "    OBJ1:" + str(randObj1))
 
-        if playerCorX > randObj1 and playerCorX < randObj1 + 10 or playerCorX > randObj2 and playerCorX < randObj2 + 10 or playerCorX > randObj3 and playerCorX < randObj3 + 10:
-            scoregame += 10
-        if playerCorX == randObj1 and jumpPlayer + 41 == 520 \
-                or playerCorX == randObj1 + 10 and jumpPlayer + 41 == 520 \
-                or playerCorX == randObj2 and jumpPlayer + 41 == 520 \
-                or playerCorX == randObj2 + 10 and jumpPlayer + 41 == 520 \
-                or playerCorX == randObj3 and jumpPlayer + 41 == 520 \
-                or playerCorX == randObj3 + 10 and jumpPlayer + 41 == 520:
+        if playerCorX == randObj1 and startPosY:
             Db.inputData(scoregame)
             closeMain = False
             scoregame = 0
             positionPlayer = 0
+        elif playerCorX == randObj1 + 10 and startPosY:
+            Db.inputData(scoregame)
+            closeMain = False
+            scoregame = 0
+            positionPlayer = 0
+        elif playerCorX == randObj2 and startPosY:
+            Db.inputData(scoregame)
+            closeMain = False
+            scoregame = 0
+            positionPlayer = 0
+        elif playerCorX == randObj2 + 10 and startPosY:
+            Db.inputData(scoregame)
+            closeMain = False
+            scoregame = 0
+            positionPlayer = 0
+        elif playerCorX == randObj3 and startPosY:
+            Db.inputData(scoregame)
+            closeMain = False
+            scoregame = 0
+            positionPlayer = 0
+        elif playerCorX == randObj3 + 10 and startPosY:
+            Db.inputData(scoregame)
+            closeMain = False
+            scoregame = 0
+            positionPlayer = 0
+
+
         if 420 <= jumpPlayer <= 478:
-            jumpPlayer += 1
+            jumpPlayer += 0.5
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -78,9 +100,10 @@ def run():
 
             score = Score(str(scoregame))
             score.output(screen)
-            positionPlayer += 1
+            positionPlayer += 0.5
 
             if positionPlayer >= W:
+                scoregame += 1
                 positionPlayer = 0
                 randObj1 = random.randint(200, 800)
                 randObj2 = random.randint(200, 800)

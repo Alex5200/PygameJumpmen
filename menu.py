@@ -1,5 +1,4 @@
 import pygame
-import WorkDatabase
 
 pygame.font.init()
 pygame.font.get_init()
@@ -7,6 +6,7 @@ pygame.font.get_init()
 
 class Menu:
     def __init__(self, maxScore):
+
         self.text_surface = None
         self.font1 = pygame.font.SysFont('freesanbold.ttf', 50)
         self.font2 = pygame.font.SysFont('freesanbold.ttf', 40)
@@ -32,3 +32,5 @@ class Menu:
         screen.blit(self.text1, self.textRect1)
         screen.blit(self.text2, self.textRect2)
         screen.blit(self.text3, self.textRect3)
+        screen.blit(self.text4, self.textRect4)
+

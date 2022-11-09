@@ -16,9 +16,11 @@ class Database:
             #cursor.execute("SELECT * FROM players")
             for data in cursor.execute("SELECT * FROM playerss"):
                 print(data)
+
+    def get_checkers_id(subject):
+        conn = sqlite3.connect("./scorePlayer.db")
+        c = conn.cursor()
+        c.execute(f"SELECT id FROM checkers WHERE subject = '{subject}'")
+        return c.fetchall()
     def outputData():
-        with sqlite3.connect('./scorePlayer.db') as db:
-            cursor = db.cursor()
-            for score in cursor.execute("SELECT MAX(score) FROM playerss"):
-                print(score)
-                return score
+        get_checkers_id(score)
