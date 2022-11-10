@@ -14,8 +14,8 @@ pygame.display.set_caption("Jumpmen")
 
 def run():
     Db = Database
-
-    menus = Menu(str(Db.outputData()))
+    scoregame = 0
+    menus = Menu()
     random.seed(20)
     randObj1 = random.randint(100, 300)
     random.seed(2)
@@ -26,7 +26,7 @@ def run():
     positionPlayer = 0
     closeMain = False
     playerSkin = "1"
-    scoregame = 0
+
     runloop = True
 
     jumpPlayer = 478
@@ -36,7 +36,7 @@ def run():
         player = Player(screen, positionPlayer, jumpPlayer, playerSkin)
         playerCorX = player.cordinateX()
         startPosY = jumpPlayer + 41.5 == 520;
-        print( "P1X:" + str(playerCorX) + "P1Y:" + str(jumpPlayer + 41.5)+ "    OBJ1:" + str(randObj1))
+        print( "P1X:" + str(playerCorX) + "P1Y:" + str(jumpPlayer)+ "    OBJ1:" + str(randObj1))
 
         if playerCorX == randObj1 and startPosY:
             Db.inputData(scoregame)
@@ -69,7 +69,6 @@ def run():
             scoregame = 0
             positionPlayer = 0
 
-
         if 420 <= jumpPlayer <= 478:
             jumpPlayer += 0.5
 
@@ -89,18 +88,22 @@ def run():
                         positionPlayer += 20
                     if event.key == pygame.K_a:
                         positionPlayer -= 20
-                    if event.key == pygame.K_w:
+                    if event.key == pygame.K_w and jumpPlayer == 478.5:
                         jumpPlayer = jumpPlayerPress
+
             if event.type == pygame.QUIT:
                 sys.exit()
 
         if not closeMain:
+            print("closeMenu")
             menus.output(screen)
         if closeMain:
 
             score = Score(str(scoregame))
             score.output(screen)
-            positionPlayer += 0.5
+            if scoregame > 0:
+                positionPlayer += 0.5 * scoregame
+            else: positionPlayer += 0.5
 
             if positionPlayer >= W:
                 scoregame += 1
