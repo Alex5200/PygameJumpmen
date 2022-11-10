@@ -5,6 +5,7 @@ from viewPlayer import Player
 from menu import Menu
 from textScore import Score
 from WorkDatabase import Database
+
 pygame.init()
 W = 1200
 H = 800
@@ -36,7 +37,6 @@ def run():
         player = Player(screen, positionPlayer, jumpPlayer, playerSkin)
         playerCorX = player.cordinateX()
         startPosY = jumpPlayer + 41.5 == 520;
-        print( "P1X:" + str(playerCorX) + "P1Y:" + str(jumpPlayer)+ "    OBJ1:" + str(randObj1))
 
         if playerCorX == randObj1 and startPosY:
             Db.inputData(scoregame)
@@ -95,8 +95,8 @@ def run():
                 sys.exit()
 
         if not closeMain:
-            print("closeMenu")
             menus.output(screen)
+
         if closeMain:
 
             score = Score(str(scoregame))

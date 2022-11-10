@@ -24,8 +24,13 @@ class Database:
             for data in cursor.execute("SELECT * FROM players"):
                 print(data)
 
-    def get_checkers_id(self, subject):
+    def outputData():
         conn = sqlite3.connect("./scorePlayer.db")
         c = conn.cursor()
-        c.execute(f"SELECT id FROM checkers WHERE subject = '{subject}'")
-        return c.fetchall()
+        c.execute(f"SELECT score FROM players")
+        arrFatching = []
+        fetchAll = c.fetchall()
+        for el in fetchAll:
+            print(el[0])
+            arrFatching.append(int(el[0]))
+        return sorted(arrFatching, reverse=True)
