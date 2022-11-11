@@ -52,28 +52,37 @@ def run():
     jump_player_press = 420
     while True:
 
+        # Передовать экран, текущю позицию, прыжок игрока, текущий скин
         player = Player(screen, position_player, jump_player, player_skin)
+        # Отдельная переменная текущей позиции игрока
         player_coordinate_x = player.cordinateX()
 
-        start_position_y = (jump_player + 43) >= 520
-        print("J:" + str(jump_player + 41.8) + " state " + str(start_position_y))
+        # Прировнять текущую позицию с позицией препядствия
+        start_position_y = (jump_player + 45) >= 520
 
-        if player_coordinate_x == random_obstacle_1 \
-                or player_coordinate_x == random_obstacle_2  \
-                or player_coordinate_x == random_obstacle_3  \
-                and start_position_y:
+        # Логика столкновения с препядствием
+        if player_coordinate_x == random_obstacle_1 and start_position_y:
             end_game(scoregame)
             close_main_menu = False
             scoregame = 0
             position_player = 0
-            print("O1 " + str(random_obstacle_1) + " O2 " + str(random_obstacle_2) + " O3 " + str(random_obstacle_3))
-            print("X:" + str(player_coordinate_x))
+        elif player_coordinate_x == random_obstacle_2 and start_position_y:
+            end_game(scoregame)
+            close_main_menu = False
+            scoregame = 0
+            position_player = 0
+        elif player_coordinate_x == random_obstacle_3 and start_position_y:
+            end_game(scoregame)
+            close_main_menu = False
+            scoregame = 0
+            position_player = 0
 
 
-
+        # Логика прыжка персонажа
         if 420 <= jump_player <= 478:
             jump_player += 0.25
 
+        # Обработчик ивентов клавиатуры
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
@@ -96,6 +105,7 @@ def run():
             if event.type == pygame.QUIT:
                 sys.exit()
 
+        # Обображение начального экрана
         if not close_main_menu:
             menus.output(screen)
 
@@ -108,13 +118,14 @@ def run():
             else:
                 position_player += 0.7
 
+            # Если персонаж зашел за карту будут созданы новые обьекты и персонаж перенесен в начальную точку
             if position_player >= W:
                 scoregame += 1
                 position_player = 0
                 random_obstacle_1 = random_object(100, 400)
                 random_obstacle_2 = random_object(500, 800)
                 random_obstacle_3 = random_object(1000, 1200)
-
+            # Отображение препядствий
             draw_line_obstacle(random_obstacle_1, random_obstacle_2, random_obstacle_3)
 
         player.output(close_main_menu)

@@ -19,16 +19,30 @@ class Menu:
         self.text2 = self.font2.render('Нажмите на пробел для того что бы начать игру', True, (0, 0, 0))
         self.text3 = self.font3.render('Нажмите на цифру 1 или 2 для того что бы выбрать игрока', True, (0, 0, 0))
         self.text4 = self.font3.render('Ваши лучший результат - ' + str(self.maxScore[0]), True, (0, 0, 0))
+        self.text5 = self.font3.render('Топ 2 - ' + str(self.maxScore[2]), True, (0, 0, 0))
+        self.text6 = self.font3.render('Топ 3 - ' + str(self.maxScore[2]), True, (0, 0, 0))
+        self.text7 = self.font3.render('Топ 4 - ' + str(self.maxScore[2]), True, (0, 0, 0))
+        self.text8 = self.font3.render('Топ 5 - ' + str(self.maxScore[2]), True, (0, 0, 0))
 
         self.textRect1 = self.text1.get_rect()
         self.textRect2 = self.text2.get_rect()
         self.textRect3 = self.text3.get_rect()
         self.textRect4 = self.text4.get_rect()
+        self.textRect5 = self.text4.get_rect()
+        self.textRect6 = self.text4.get_rect()
+        self.textRect7 = self.text4.get_rect()
+        self.textRect8 = self.text4.get_rect()
+
 
         self.textRect1.center = (500, 100)
         self.textRect2.center = (500, 150)
         self.textRect3.center = (500, 200)
         self.textRect4.center = (1000, 350)
+        self.textRect5.center = (1000, 400)
+        self.textRect6.center = (1000, 450)
+        self.textRect7.center = (1000, 500)
+        self.textRect8.center = (1000, 550)
+
 
 
     def output(self, screen):
@@ -36,3 +50,7 @@ class Menu:
         screen.blit(self.text2, self.textRect2)
         screen.blit(self.text3, self.textRect3)
         screen.blit(self.text4, self.textRect4)
+        screen.blit(self.text5, self.textRect5)
+        screen.blit(self.text6, self.textRect6)
+        screen.blit(self.text7, self.textRect7)
+        screen.blit(self.text8, self.textRect8)
