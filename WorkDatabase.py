@@ -4,32 +4,24 @@ import time
 
 class Database:
     def __init__(self):
-        with sqlite3.connect('./scorePlayer.db') as db:
-            cursos = db.cursor()
+        with sqlite3.connect('DataBase/scorePlayer.db') as db:
+            self.Cursos = db.cursor()
             try:
-                cursos.execute("CREATE TABLE players(id, time, score)")
+                self.Cursos.execute("CREATE TABLE players(id, time, score)")
             except:
                 print("err create dataBase")
 
-    def inputData(scores):
-        with sqlite3.connect('./scorePlayer.db') as db:
-            cursor = db.cursor()
+    def input_data(self, scores):
+        result = time.localtime()
+        value = [
+            (result.tm_min, scores)
+        ]
+        self.Cursos.executemany("INSERT INTO players(time, score) VALUES(?, ?)", value)
 
-            result = time.localtime()
-            value = [
-                (result.tm_min, scores)
-            ]
-            cursor.executemany("INSERT INTO players(time, score) VALUES(?, ?)", value)
-            # cursor.execute("SELECT * FROM players")
-            for data in cursor.execute("SELECT * FROM players"):
-                print(data)
-
-    def outputData():
-        conn = sqlite3.connect("./scorePlayer.db")
-        c = conn.cursor()
-        c.execute(f"SELECT score FROM players")
+    def output_data(self):
+        self.Cursos.execute(f"SELECT score FROM players")
         arrFatching = []
-        fetchAll = c.fetchall()
+        fetchAll = self.Cursos.fetchall()
         for el in fetchAll:
             print(el[0])
             arrFatching.append(int(el[0]))

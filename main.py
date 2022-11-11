@@ -13,120 +13,111 @@ screen = pygame.display.set_mode((W, H))
 pygame.display.set_caption("Jumpmen")
 
 
+def draw_line_obstacle(draw_random_obstacle1, draw_random_obstacle2, draw_random_obstacle3):
+    pygame.draw.line(screen, (0, 0, 0),
+                     [draw_random_obstacle1, 520],
+                     [draw_random_obstacle1 + 10, 520], 20)
+    pygame.draw.line(screen, (0, 0, 0),
+                     [draw_random_obstacle2, 520],
+                     [draw_random_obstacle2 + 10, 520], 20)
+    pygame.draw.line(screen, (0, 0, 0),
+                     [draw_random_obstacle3, 520],
+                     [draw_random_obstacle3 + 10, 520], 20)
+    pygame.draw.line(screen, (255, 0, 0),
+                     [0, 528],
+                     [W, 528], 9)
+
+
+def random_object(minimal, maximum):
+    random.seed(random.randint(minimal, maximum))
+    return random.randint(minimal, maximum)
+
+
 def run():
-    Db = Database
+    db = Database()
     scoregame = 0
     menus = Menu()
-    random.seed(20)
-    randObj1 = random.randint(100, 300)
-    random.seed(2)
-    randObj2 = random.randint(450, 600)
-    random.seed(10)
-    randObj3 = random.randint(650, 800)
+    random_obstacle_1 = random_object(100, 400)
+    random_obstacle_2 = random_object(500, 800)
+    random_obstacle_3 = random_object(1000, 1200)
 
-    positionPlayer = 0
-    closeMain = False
-    playerSkin = "1"
+    position_player = 0
+    close_main_menu = False
+    player_skin = "1"
 
-    runloop = True
+    def end_game(in_score_game):
+        db.input_data(in_score_game)
 
-    jumpPlayer = 478
-    jumpPlayerPress = 420
-    while runloop:
+    jump_player = 478
+    jump_player_press = 420
+    while True:
 
-        player = Player(screen, positionPlayer, jumpPlayer, playerSkin)
-        playerCorX = player.cordinateX()
-        startPosY = jumpPlayer + 41.5 == 520;
+        player = Player(screen, position_player, jump_player, player_skin)
+        player_coordinate_x = player.cordinateX()
 
-        if playerCorX == randObj1 and startPosY:
-            Db.inputData(scoregame)
-            closeMain = False
-            scoregame = 0
-            positionPlayer = 0
-        elif playerCorX == randObj1 + 10 and startPosY:
-            Db.inputData(scoregame)
-            closeMain = False
-            scoregame = 0
-            positionPlayer = 0
-        elif playerCorX == randObj2 and startPosY:
-            Db.inputData(scoregame)
-            closeMain = False
-            scoregame = 0
-            positionPlayer = 0
-        elif playerCorX == randObj2 + 10 and startPosY:
-            Db.inputData(scoregame)
-            closeMain = False
-            scoregame = 0
-            positionPlayer = 0
-        elif playerCorX == randObj3 and startPosY:
-            Db.inputData(scoregame)
-            closeMain = False
-            scoregame = 0
-            positionPlayer = 0
-        elif playerCorX == randObj3 + 10 and startPosY:
-            Db.inputData(scoregame)
-            closeMain = False
-            scoregame = 0
-            positionPlayer = 0
+        start_position_y = (jump_player + 43) >= 520
+        print("J:" + str(jump_player + 41.8) + " state " + str(start_position_y))
 
-        if 420 <= jumpPlayer <= 478:
-            jumpPlayer += 0.5
+        if player_coordinate_x == random_obstacle_1 \
+                or player_coordinate_x == random_obstacle_2  \
+                or player_coordinate_x == random_obstacle_3  \
+                and start_position_y:
+            end_game(scoregame)
+            close_main_menu = False
+            scoregame = 0
+            position_player = 0
+            print("O1 " + str(random_obstacle_1) + " O2 " + str(random_obstacle_2) + " O3 " + str(random_obstacle_3))
+            print("X:" + str(player_coordinate_x))
+
+
+
+        if 420 <= jump_player <= 478:
+            jump_player += 0.25
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    closeMain = True
+                    close_main_menu = True
 
-                if not closeMain:
+                if not close_main_menu:
                     if event.key == pygame.K_1:
-                        playerSkin = "1"
+                        player_skin = "1"
                     if event.key == pygame.K_2:
-                        playerSkin = "2"
+                        player_skin = "2"
 
-                if closeMain:
+                if close_main_menu:
                     if event.key == pygame.K_d:
-                        positionPlayer += 20
+                        position_player += 20
                     if event.key == pygame.K_a:
-                        positionPlayer -= 20
-                    if event.key == pygame.K_w and jumpPlayer == 478.5:
-                        jumpPlayer = jumpPlayerPress
+                        position_player -= 20
+                    if event.key == pygame.K_w and jump_player == 478.25:
+                        jump_player = jump_player_press
 
             if event.type == pygame.QUIT:
                 sys.exit()
 
-        if not closeMain:
+        if not close_main_menu:
             menus.output(screen)
 
-        if closeMain:
+        if close_main_menu:
 
             score = Score(str(scoregame))
             score.output(screen)
             if scoregame > 0:
-                positionPlayer += 0.5 * scoregame
-            else: positionPlayer += 0.5
+                position_player += 0.7 * scoregame
+            else:
+                position_player += 0.7
 
-            if positionPlayer >= W:
+            if position_player >= W:
                 scoregame += 1
-                positionPlayer = 0
-                randObj1 = random.randint(200, 800)
-                randObj2 = random.randint(200, 800)
-                randObj3 = random.randint(200, 800)
+                position_player = 0
+                random_obstacle_1 = random_object(100, 400)
+                random_obstacle_2 = random_object(500, 800)
+                random_obstacle_3 = random_object(1000, 1200)
 
+            draw_line_obstacle(random_obstacle_1, random_obstacle_2, random_obstacle_3)
 
-            pygame.draw.line(screen, (0, 0, 0),
-                             [randObj1, 520],
-                             [randObj1 + 10, 520], 20)
-            pygame.draw.line(screen, (0, 0, 0),
-                             [randObj2, 520],
-                             [randObj2 + 10, 520], 20)
-            pygame.draw.line(screen, (0, 0, 0),
-                             [randObj3, 520],
-                             [randObj3 + 10, 520], 20)
-            pygame.draw.line(screen, (255, 0, 0),
-                             [0,   528],
-                             [W, 528], 9)
-
-        player.output(closeMain)
+        player.output(close_main_menu)
         pygame.display.update()
         pygame.display.flip()
 

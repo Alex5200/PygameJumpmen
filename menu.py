@@ -7,8 +7,8 @@ pygame.font.get_init()
 
 class Menu:
     def __init__(self):
-        Db = Database
-        self.maxScore = Db.outputData()
+        Db = Database()
+        self.maxScore = Db.output_data()
 
         self.text_surface = None
         self.font1 = pygame.font.SysFont('freesanbold.ttf', 50)
