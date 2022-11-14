@@ -20,9 +20,9 @@ class Menu:
         self.text3 = self.font3.render('Нажмите на цифру 1 или 2 для того что бы выбрать игрока', True, (0, 0, 0))
         self.text4 = self.font3.render('Ваши лучший результат - ' + str(self.maxScore[0]), True, (0, 0, 0))
         self.text5 = self.font3.render('Топ 2 - ' + str(self.maxScore[2]), True, (0, 0, 0))
-        self.text6 = self.font3.render('Топ 3 - ' + str(self.maxScore[2]), True, (0, 0, 0))
-        self.text7 = self.font3.render('Топ 4 - ' + str(self.maxScore[2]), True, (0, 0, 0))
-        self.text8 = self.font3.render('Топ 5 - ' + str(self.maxScore[2]), True, (0, 0, 0))
+        self.text6 = self.font3.render('Топ 3 - ' + str(self.maxScore[3]), True, (0, 0, 0))
+        self.text7 = self.font3.render('Топ 4 - ' + str(self.maxScore[4]), True, (0, 0, 0))
+        self.text8 = self.font3.render('Топ 5 - ' + str(self.maxScore[5]), True, (0, 0, 0))
 
         self.textRect1 = self.text1.get_rect()
         self.textRect2 = self.text2.get_rect()
