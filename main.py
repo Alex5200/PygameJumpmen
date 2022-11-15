@@ -13,6 +13,12 @@ H = 800
 screen = pygame.display.set_mode((W, H))
 pygame.display.set_caption("Jumpmen")
 
+
+db = Database()
+input_box = InputBox
+menus = Menu()
+
+
 def draw_line_obstacle(draw_random_obstacle1, draw_random_obstacle2, draw_random_obstacle3):
     pygame.draw.line(screen, (0, 0, 0),
                      [draw_random_obstacle1, 520],
@@ -34,24 +40,24 @@ def random_object(minimal, maximum):
 
 
 def run():
-    db = Database()
-    input_box = InputBox
-    scoregame = 0
-    menus = Menu()
     random_obstacle_1 = random_object(100, 400)
     random_obstacle_2 = random_object(500, 800)
     random_obstacle_3 = random_object(1000, 1200)
 
+    text_input_box = ""
+
+    jump_player = 478
+    jump_player_press = 420
+    scoregame = 0
+
     position_player = 0
     close_main_menu = False
     player_skin = "1"
-    text_input_box = ""
 
     def end_game(in_score_game):
         db.input_data(in_score_game, text_input_box)
 
-    jump_player = 478
-    jump_player_press = 420
+
     while True:
 
         # Передовать экран, текущю позицию, прыжок игрока, текущий скин
@@ -64,17 +70,17 @@ def run():
         start_position_y = (jump_player + 45) >= 520
 
         # Логика столкновения с препядствием
-        if player_coordinate_x == random_obstacle_1 and start_position_y:
+        if player_coordinate_x >= random_obstacle_1 and player_coordinate_x <= random_obstacle_1 + 10 and start_position_y:
             end_game(scoregame)
             close_main_menu = False
             scoregame = 0
             position_player = 0
-        elif player_coordinate_x == random_obstacle_2 and start_position_y:
+        elif player_coordinate_x == random_obstacle_2 and player_coordinate_x <= random_obstacle_2 + 10 and start_position_y:
             end_game(scoregame)
             close_main_menu = False
             scoregame = 0
             position_player = 0
-        elif player_coordinate_x == random_obstacle_3 and start_position_y:
+        elif player_coordinate_x == random_obstacle_3 and player_coordinate_x <= random_obstacle_3 + 10 and start_position_y:
             end_game(scoregame)
             close_main_menu = False
             scoregame = 0
@@ -96,7 +102,8 @@ def run():
                     if event.key == pygame.K_BACKSPACE:
                         text_input_box = text_input_box[:-1]
                     else:
-                        text_input_box += event.unicode
+                        if not (event.unicode == "1" or event.unicode == "2" ):
+                            text_input_box += event.unicode
 
                     if event.key == pygame.K_1:
                         player_skin = "1"
